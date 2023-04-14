@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  front:
+    build:
+      context: .
+      dockerfile: Dockerfile # 도커파일 위치
+    ports:
+      - '8082:8080'
+    volumes:
+      - ./:/opt
+      - /opt/node_modules
+    extra_hosts:
+      - "test.jaeggle.com:0.0.0.0"
+    #command: bash -c "npm run storybook"
+    tty: true
+    command: bash -c "npm run serve"
