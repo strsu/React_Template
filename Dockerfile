@@ -1,5 +1,5 @@
-FROM node:14.15
+FROM node:18.16
 
 WORKDIR /opt
-COPY ./package.json /opt
+COPY ./app/package*.json /opt
 RUN npm install
