@@ -23,18 +23,22 @@ function ChatPresenter({ props, state }) {
     });
 
     useEffect(() => {
-        console.log(chat);
+
+        useChat.subscribe(
+            state => {
+                setChat(state.conversation.map(v => v));
+                /*
+                    state.conversation 은 call by reference 라서 react에서 감지를 못 함
+                    때문에 map으로 새로운 객체를 만들어줘야 re-render가 발생한다.
+                */
+            },
+            state => state.conversation
+        ); // text 값이 바뀔 때만 로그가 출력됨
+        
+        
     }, [])
 
-    useChat.subscribe(
-        state => {
-            setChat(state.conversation);
-        },
-        state => state.conversation
-    ); // text 값이 바뀔 때만 로그가 출력됨
-
-
-
+    
     return (
         <>
             <ChatContainer />
