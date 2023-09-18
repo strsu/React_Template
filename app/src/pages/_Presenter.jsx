@@ -1,14 +1,13 @@
 import React from 'react';
 
-function Presenter(props) {
-    console.log('@Presenter');
+function _Presenter(props) {
+  console.log('@Presenter');
 
-    return (
-        <>
-            <div>
-            </div>
-        </>
-    );
+  return (
+    <>
+      <div></div>
+    </>
+  );
 }
 
-export default Presenter;
+export default _Presenter;

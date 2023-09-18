@@ -1,0 +1,59 @@
+.App {
+  display: flex;
+  font-family: "Spoqa Han Sans Neo", -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", helvetica, "Apple SD Gothic Neo", sans-serif;
+}
+
+.menu {
+  position: fixed;
+  height: 100vh;
+  min-width: 200px;
+	max-width: 200px;
+	background-color: #475666;
+}
+
+.body {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-left: 200px;
+}
+
+.head {
+  min-height: 40px;
+  max-height: 40px;
+}
+
+.content {
+  display: flex;
+	flex-direction: column;
+	width: 100%;
+  height: calc(100vh - 40px);
+  padding: 10px;
+	overflow-y: auto;
+	background: #eef0f3;
+}
+
+@media (min-width: 800px) {
+  .menu {
+    transform: translateX(0);
+    transition: transform .5s;
+  }
+
+  .body {
+    padding-left: 200px;
+    transition: padding-left .5s;
+    
+  }
+}
+
+@media (max-width: 799px) {
+  .menu {
+    transform: translateX(-200px);
+    transition: transform .5s; /* 0.5초 동안 transform을 수행 */
+  }
+
+  .body {
+    padding-left: 0;
+    transition: padding-left .5s;
+    
+  }
+}

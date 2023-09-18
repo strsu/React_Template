@@ -1,22 +1,70 @@
-import { API } from "../constants";
-import { request } from "../api";
+import { API } from '../constants';
+import { customAxios } from '../api';
+
+import { useAuthStore } from '../../context/authStore';
 
 export const authApi = {
+  login: (user) => {
+    return customAxios
+      .post(API.AUTH.BASE, {
+        email: user.email,
+        password: user.password,
+      })
+      .then((res) => {
+        const access = res.data.access;
+        const refresh = res.data.refresh;
 
-    login: async (user) => {
-        console.log(API.AUTH.BASE);
-        request.post(API.AUTH.BASE, {
-            email: user.email,
-            password: user.password
-        }).then((res) => {
-            const token = res.data.access;
+        useAuthStore.getState().setVerify(true);
 
-            localStorage.setItem("token", token); // localStorage에 토큰 저장
-            request.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        localStorage.setItem('refresh', refresh); // localStorage에 토큰 저장
+        customAxios.defaults.headers.common[
+          'Authorization'
+        ] = `Bearer ${access}`;
 
-            return true;
-        }).catch((err) => {
-            console.log(err);
-        })
-    }
-}
+        return true;
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status >= 500) {
+          return false;
+        } else if (err.response.status >= 400) {
+          return false;
+        }
+      });
+  },
+
+  verify: () => {
+    return customAxios
+      .post(API.AUTH.VERIFY, {
+        token: useAuthStore.getState().access,
+      })
+      .then((res) => {
+        return true;
+      })
+      .catch((err) => {
+        return authApi.refresh();
+      });
+  },
+
+  refresh: () => {
+    return customAxios
+      .post(API.AUTH.REFRESH, {
+        refresh: useAuthStore.getState().refresh,
+      })
+      .then((res) => {
+        const access = res.data.access;
+        customAxios.defaults.headers.common[
+          'Authorization'
+        ] = `Bearer ${access}`;
+        useAuthStore.getState().setVerify(true);
+        return true;
+      })
+      .catch((err) => {
+        if (err.response.status >= 500) {
+          return false;
+        } else if (err.response.status >= 400) {
+          return false;
+        }
+      });
+  },
+};

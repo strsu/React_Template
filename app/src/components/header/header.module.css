@@ -1,0 +1,23 @@
+
+.header {
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+    border-bottom: solid gray 1px;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon {
+    cursor: pointer;
+}

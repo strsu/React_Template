@@ -1,35 +1,27 @@
 import React, { Component } from 'react';
-import Presenter from ".//Presenter";
+import Presenter from './/Presenter';
 
-class extends Component {
+class _Component extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { date: new Date() };
+  }
 
-    constructor(props) {
-        super(props);
-        this.state = { date: new Date() };
-    }
+  componentDidMount() {}
 
-    componentDidMount() {
-    }
+  componentWillUnmount() {}
 
-    componentWillUnmount() {
-    }
+  handleIncrease() {
+    console.log('increase');
+  }
 
-    handleIncrease() {
-        console.log('increase');
-    }
+  handleDecrease() {
+    console.log('decrease');
+  }
 
-    handleDecrease() {
-        console.log('decrease');
-    }
-
-    render() {
-        return (
-            <Presenter
-                props={this.props}
-                state={this.state}
-            />
-        );
-    }
+  render() {
+    return <Presenter props={this.props} state={this.state} />;
+  }
 }
 
-export default ;
+export default _Component;
