@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useChat } from '../../context/chatStore';
+import { useChatStore } from '../../context/chatStore';
 import { shallow } from 'zustand/shallow';
 
 import '../../assets/css/chat.css';
@@ -13,7 +13,8 @@ function ChatContainer() {
 }
 
 function ChatPresenter({ props, state }) {
-  console.log('@ChatPresenter');
+  const authToken = '';
+  document.cookie = `X-Authorization=${authToken}; path=/;`;
 
   const [chat, setChat] = useState([]);
   let chatList = chat.map((msg) => {
@@ -21,13 +22,13 @@ function ChatPresenter({ props, state }) {
   });
 
   useEffect(() => {
-    useChat.subscribe(
+    useChatStore.subscribe(
       (state) => {
         setChat(state.conversation.map((v) => v));
         /*
-                    state.conversation 은 call by reference 라서 react에서 감지를 못 함
-                    때문에 map으로 새로운 객체를 만들어줘야 re-render가 발생한다.
-                */
+          state.conversation 은 call by reference 라서 react에서 감지를 못 함
+          때문에 map으로 새로운 객체를 만들어줘야 re-render가 발생한다.
+        */
       },
       (state) => state.conversation
     ); // text 값이 바뀔 때만 로그가 출력됨

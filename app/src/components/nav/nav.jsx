@@ -7,11 +7,11 @@ import { HiChevronDown, HiChevronLeft, HiEmojiHappy } from 'react-icons/hi';
 function Nav() {
   const [page, setPage] = useState('');
   const [submenu, SetSubmenu] = useState({
-    sub1: false,
+    resource: false,
     sub2: false,
   });
 
-  const MyLink = ({ mypage, to }) => {
+  const MyLink = ({ ICON, mypage, to }) => {
     return (
       <Link
         className={`${styles.navItem} ${page == mypage ? styles.me : ''}`}
@@ -20,7 +20,7 @@ function Nav() {
       >
         <div className={styles.itemBox}>
           <div className={styles.innerIcon}>
-            <HiEmojiHappy size={25} />
+            {ICON ? <ICON size={25} /> : <div>&nbsp;</div>}
             <div>{mypage}</div>
           </div>
           <div>&nbsp;</div>
@@ -41,20 +41,23 @@ function Nav() {
     <div>
       <ul className={styles.navigation}>
         <li>
-          <MyLink mypage={'Home'} to={''} />
+          <MyLink ICON={HiEmojiHappy} mypage={'Home'} to={''} />
         </li>
         <li>
-          <MyLink mypage={'Chat'} to={'chat'} />
+          <MyLink ICON={HiEmojiHappy} mypage={'Chat'} to={'chat'} />
         </li>
         <li>
-          <a className={`${styles.navItem}`} onClick={() => toggle('sub1')}>
+          <MyLink ICON={HiEmojiHappy} mypage={'집합관리'} to={'group'} />
+        </li>
+        <li>
+          <a className={`${styles.navItem}`} onClick={() => toggle('resource')}>
             <div className={styles.itemBox}>
               <div className={styles.innerIcon}>
                 <HiEmojiHappy size={25} />
                 <div>자원관리</div>
               </div>
               <div className={styles.innerIcon}>
-                {submenu.sub1 ? (
+                {submenu.resource ? (
                   <HiChevronDown size={25} />
                 ) : (
                   <HiChevronLeft size={25} />
@@ -64,43 +67,11 @@ function Nav() {
           </a>
           <ul
             className={`${styles.dropdown_items} ${
-              submenu.sub1 ? styles.visiable : styles.hidden
+              submenu.resource ? styles.visiable : styles.hidden
             }`}
           >
             <li>
-              <MyLink mypage={'자원등록'} to={'1'} />
-            </li>
-            <li>
-              <MyLink mypage={'2'} to={'2'} />
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a className={`${styles.navItem}`} onClick={() => toggle('sub2')}>
-            <div className={styles.itemBox}>
-              <div>서브메뉴2</div>
-              <div>
-                {submenu.sub2 ? (
-                  <HiChevronDown size={25} />
-                ) : (
-                  <HiChevronLeft size={25} />
-                )}
-              </div>
-            </div>
-          </a>
-          <ul
-            className={`${styles.dropdown_items} ${
-              submenu.sub2 ? styles.visiable : styles.hidden
-            }`}
-          >
-            <li>
-              <MyLink mypage={'3'} to={'3'} />
-            </li>
-            <li>
-              <MyLink mypage={'4'} to={'4'} />
-            </li>
-            <li>
-              <MyLink mypage={'5'} to={'5'} />
+              <MyLink mypage={'자원목록'} to={'resource'} />
             </li>
           </ul>
         </li>

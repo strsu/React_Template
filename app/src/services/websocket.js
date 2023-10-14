@@ -1,17 +1,77 @@
-//import socketIOClient from 'socket.io-client';
+import { useChatStore } from '../context/chatStore';
+import { API } from './constants';
 
-const apiWebsocket = `wss://${process.env.REACT_APP_API}`;
+export default class WebSocketManager {
+  constructor(userName) {
+    this.userName = userName;
+    this.socket = new WebSocket(`${API.SOCKET.CHAT}/${userName}/`);
+    this.socket.onopen = this.onopen.bind(this);
+    this.socket.onerror = this.onopen.bind(this);
+    this.socket.onmessage = this.onmessage.bind(this);
+    this.socket.onclose = this.onclose.bind(this);
+  }
 
-export const socket = {
-  connect: (url) => {
-    console.log(`${apiWebsocket}/${url}`);
-    /*return socketIOClient(`${apiWebsocket}/${url}`, {
-            withCredentials: true,
-            cors: {
-                origin: "https://localhost",
-            }
-        });*/
+  getReadyState() {
+    return this.socket.readyState;
+  }
 
-    return new WebSocket(`${apiWebsocket}/${url}`);
-  },
-};
+  connect() {
+    this.socket = new WebSocket(`${API.SOCKET.CHAT}/${this.userName}/`);
+    this.socket.onopen = this.onopen.bind(this);
+    this.socket.onerror = this.onopen.bind(this);
+    this.socket.onmessage = this.onmessage.bind(this);
+    this.socket.onclose = this.onclose.bind(this);
+  }
+
+  onopen(event) {
+    //console.log('WebSocket connection opened:', event);
+    //document.getElementById('chat-message-input').removeAttribute('readonly');
+    //document.getElementById("chat-message-input").focus();
+    //document.addEventListener('mousemove', getMousePosition);
+  }
+
+  onmessage(event) {
+    const data = JSON.parse(event.data);
+    console.log(data);
+    // this.receiver.actor(data);
+  }
+
+  onerror(event) {
+    console.log('WebSocket connection error:', event);
+  }
+
+  onclose(event) {
+    console.log(
+      'Socket closed with code:',
+      event.code,
+      'reason:',
+      event.reason
+    );
+  }
+
+  send(data) {
+    if (this.socket.readyState == 1) {
+      this.socket.send(data);
+    }
+
+    if (this.socket.readyState > 1) {
+      this.connect();
+    }
+  }
+
+  sendText(message) {
+    let base = {
+      name: this.userName,
+      time: new Date(),
+    };
+
+    let data = {
+      data: Object.assign({}, base, message),
+    };
+    this.send(JSON.stringify(data));
+  }
+
+  sendBytes(data) {
+    this.send(data);
+  }
+}

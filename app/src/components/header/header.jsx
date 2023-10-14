@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './header.module.css';
 
 import { HiMenu, HiOutlineUser, HiOutlineBell } from 'react-icons/hi';
+
+import { authApi } from '../../services/auth/auth';
 
 function Header() {
   return (
@@ -17,7 +19,7 @@ function Header() {
         <div className={styles.icon}>
           <HiOutlineBell size={20} />
         </div>
-        <div className={styles.icon}>
+        <div className={styles.icon} onClick={authApi.logout}>
           <HiOutlineUser size={20} />
         </div>
       </div>

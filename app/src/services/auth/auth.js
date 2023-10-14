@@ -33,6 +33,11 @@ export const authApi = {
       });
   },
 
+  logout: () => {
+    useAuthStore.getState().setVerify(false);
+    localStorage.removeItem('refresh'); // localStorage에 토큰 저장
+  },
+
   verify: () => {
     return customAxios
       .post(API.AUTH.VERIFY, {
@@ -60,6 +65,10 @@ export const authApi = {
         return true;
       })
       .catch((err) => {
+        if (err.code === 'ERR_NETWORK') {
+          return false;
+        }
+
         if (err.response.status >= 500) {
           return false;
         } else if (err.response.status >= 400) {

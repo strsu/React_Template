@@ -1,6 +1,9 @@
 import { create } from 'zustand';
 
-export const useChat = create((set, get) => ({
+import WebSocketManager from '../services/websocket';
+
+export const useChatStore = create((set, get) => ({
+  manager: null,
   user: '',
   conversation: [],
   setConversation: (val) => set((state) => ({ conversation: val })),
@@ -8,8 +11,14 @@ export const useChat = create((set, get) => ({
   sendMessage: (message, from, to) => {},
 
   onMessage: (msg) => {
-    let conversation = useChat.getState().conversation;
+    let conversation = useChatStore.getState().conversation;
     conversation.push(msg);
-    useChat.getState().setConversation(conversation);
+    useChatStore.getState().setConversation(conversation);
+  },
+
+  onConnect: () => {
+    set(() => ({
+      manager: new WebSocketManager('user'),
+    }));
   },
 }));

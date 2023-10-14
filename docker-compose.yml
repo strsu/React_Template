@@ -11,7 +11,7 @@ services:
       - ./app/:/opt
       - /opt/node_modules
     extra_hosts:
-      - "test.jaeggle.com:0.0.0.0"
+      - "host.docker.internal:host-gateway"
     environment:
       - CHOKIDAR_USEPOLLING=true # 소스저장 후 리로드 하려면 해당 설정이 필요.
     command: bash -c "npm start"

@@ -1,16 +1,14 @@
-const API_PREFIX = 'api';
-const WS_PREFIX = 'ws';
+const API_PREFIX = 'api/v1';
+const WS_PREFIX = 'wss:/';
 
 export const API = {
   AUTH: {
-    BASE: `/${API_PREFIX}/v1/user/token/`,
-    VERIFY: `/${API_PREFIX}/v1/user/token/verify/`,
-    REFRESH: `/${API_PREFIX}/v1/user/token/refresh/`,
+    BASE: `/${API_PREFIX}/user/token/`,
+    VERIFY: `/${API_PREFIX}/user/token/verify/`,
+    REFRESH: `/${API_PREFIX}/user/token/refresh/`,
   },
-  RESOURCE: {
-    LIST: `/${API_PREFIX}/resource/`,
-  },
+  BOARD: `/${API_PREFIX}/board/`,
   SOCKET: {
-    MAFIA: `${WS_PREFIX}/chat/mafia/asdf/`,
+    CHAT: `${WS_PREFIX}/192.168.1.230/ws/chat/test`,
   },
 };
