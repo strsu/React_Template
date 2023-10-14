@@ -5,11 +5,10 @@ import YButton from '../../YComponents/styles/button/YButton';
 import YInput from '../../YComponents/styles/input/YInput';
 import YDialogActor from '../../YComponents/service/dialog/YDialogActor';
 
-import PlantRegist from '../resource/components/PlantRegist';
 import useApi from '../../hook/useApi';
 
 function HomePresenter(props) {
-  const state = useState({ a: '12' });
+  const state = useState({ a: '' });
 
   const onConfirm = async () => {
     console.log('확인');
@@ -71,7 +70,7 @@ function HomePresenter(props) {
         </YButton>
       </div>
 
-      <YDialogActor
+      {/* <YDialogActor
         title="정말로 삭제하시겠습니까?"
         State={state}
         Component={PlantRegist}
@@ -80,7 +79,7 @@ function HomePresenter(props) {
         onConfirm={onConfirm}
       >
         삭제
-      </YDialogActor>
+      </YDialogActor> */}
     </div>
   );
 }

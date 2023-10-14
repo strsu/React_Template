@@ -46,7 +46,7 @@ function Nav() {
         <li>
           <MyLink ICON={HiEmojiHappy} mypage={'Chat'} to={'chat'} />
         </li>
-        <li>
+        {/* <li>
           <MyLink ICON={HiEmojiHappy} mypage={'집합관리'} to={'group'} />
         </li>
         <li>
@@ -74,7 +74,7 @@ function Nav() {
               <MyLink mypage={'자원목록'} to={'resource'} />
             </li>
           </ul>
-        </li>
+        </li> */}
       </ul>
     </div>
   );
