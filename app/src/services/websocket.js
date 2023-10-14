@@ -1,10 +1,12 @@
 import { useChatStore } from '../context/chatStore';
 import { API } from './constants';
 
+const socketHost = `wss://${process.env.REACT_APP_API}`;
+
 export default class WebSocketManager {
   constructor(userName) {
     this.userName = userName;
-    this.socket = new WebSocket(`${API.SOCKET.CHAT}/${userName}/`);
+    this.socket = new WebSocket(`${socketHost}${API.SOCKET.CHAT}/${userName}/`);
     this.socket.onopen = this.onopen.bind(this);
     this.socket.onerror = this.onopen.bind(this);
     this.socket.onmessage = this.onmessage.bind(this);

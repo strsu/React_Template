@@ -1,5 +1,5 @@
 const API_PREFIX = 'api/v1';
-const WS_PREFIX = 'wss:/';
+const WS_PREFIX = 'ws';
 
 export const API = {
   AUTH: {
@@ -9,6 +9,6 @@ export const API = {
   },
   BOARD: `/${API_PREFIX}/board/`,
   SOCKET: {
-    CHAT: `${WS_PREFIX}/192.168.1.230/ws/chat/test`,
+    CHAT: `/${WS_PREFIX}/chat/test`,
   },
 };
