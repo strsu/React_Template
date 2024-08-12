@@ -24,7 +24,7 @@ function ChatPresenter({ props, state }) {
   useEffect(() => {
     useChatStore.subscribe(
       (state) => {
-        setChat(state.conversation.map((v) => v));
+        setChat(state.conversation.map((v) => v.msg.message));
         /*
           state.conversation 은 call by reference 라서 react에서 감지를 못 함
           때문에 map으로 새로운 객체를 만들어줘야 re-render가 발생한다.

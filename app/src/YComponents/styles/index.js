@@ -1,7 +1,7 @@
-import button from './button';
-import dialog from './dialog';
+// import button from './button';
+// import dialog from './dialog';
 
-export default {
-  button,
-  dialog,
-};
+// export default {
+//   button,
+//   dialog,
+// };

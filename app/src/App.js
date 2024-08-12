@@ -8,6 +8,9 @@ import Login from './pages/login/login';
 
 import Home from './pages/home/HomeComponent';
 import Chat from './pages/chat/chatComponent';
+import BoardList from './pages/board/BoardList';
+import BoardDetail from './pages/board/BoardDetail';
+import BoardWriting from './pages/board/BoardWriting';
 
 import NotFound from './pages/notFound';
 
@@ -72,6 +75,9 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />}></Route>
                 <Route path="/chat/*" element={<Chat />}></Route>
+                <Route path="/board/" element={<BoardList />}></Route>
+                <Route path="/board/write/" element={<BoardWriting />}></Route>
+                <Route path="/board/:id" element={<BoardDetail />}></Route>
                 {/* 상단에 위치하는 라우트들의 규칙을 모두 확인, 일치하는 라우트가 없는경우 처리 */}
                 <Route path="*" element={<NotFound />}></Route>
               </Routes>

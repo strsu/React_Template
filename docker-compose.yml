@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile # 도커파일 위치
     ports:
-      - '8082:3000'
+      - '3000:3000'
     volumes:
       - ./app/:/opt
       - /opt/node_modules
@@ -14,4 +14,4 @@ services:
       - "host.docker.internal:host-gateway"
     environment:
       - CHOKIDAR_USEPOLLING=true # 소스저장 후 리로드 하려면 해당 설정이 필요.
-    command: bash -c "npm start"
+    command: bash -c "npm run start"

@@ -1,3 +1,3 @@
-import YDialog from './YDialog';
+// import YDialog from './YDialog';
 
-export default { YDialog };
+// export default { YDialog };

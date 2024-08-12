@@ -22,14 +22,18 @@ const request = {
     return response;
   },
   handleError: async (err, method, url, data) => {
-    if (err.response.status === 401) {
-      const is_verified = await request.handleAuth();
-      if (!is_verified) {
-        return false;
+    if (Object.keys(err).includes('response')) {
+      if (err.response.status === 401) {
+        const is_verified = await request.handleAuth();
+        if (!is_verified) {
+          return false;
+        }
+        return await request.request(method, url, data, true);
+      } else {
+        return err.response;
       }
-      return await request.request(method, url, data, true);
     } else {
-      return err.response;
+      console.log('###', err.message);
     }
   },
   request: async (method, url, data, is_retry = false) => {

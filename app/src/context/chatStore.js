@@ -5,15 +5,17 @@ import WebSocketManager from '../services/websocket';
 export const useChatStore = create((set, get) => ({
   manager: null,
   user: '',
-  conversation: [],
-  setConversation: (val) => set((state) => ({ conversation: val })),
+  conversation: Array(),
+  // setConversation: (val) => set((state) => ({ conversation: val })),
 
   sendMessage: (message, from, to) => {},
 
   onMessage: (msg) => {
-    let conversation = useChatStore.getState().conversation;
-    conversation.push(msg);
-    useChatStore.getState().setConversation(conversation);
+    if (msg) {
+      set((state) => ({
+        conversation: [...state.conversation, msg],
+      }));
+    }
   },
 
   onConnect: () => {

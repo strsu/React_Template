@@ -34,6 +34,10 @@ export default class WebSocketManager {
 
   onmessage(event) {
     const data = JSON.parse(event.data);
+
+    if (Object.keys(data).includes('msg')) {
+      useChatStore.getState().onMessage(data);
+    }
     console.log(data);
     // this.receiver.actor(data);
   }

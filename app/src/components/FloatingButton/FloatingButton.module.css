@@ -1,0 +1,64 @@
+.floating_container {
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+}
+
+.floating_button {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  background-color: #0074d9;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.floating_button:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+
+.secondary_buttons {
+  position: relative;
+  align-items: center;
+  bottom: 150px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 5px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.secondary_buttons button {
+  width: 40px;
+  height: 40px;
+  background-color: #0056b3;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.secondary_buttons button:hover {
+  background-color: #004194;
+}
+
+.secondary_buttons.visiable {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s, visibility 0.3s;
+}
