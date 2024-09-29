@@ -49,6 +49,9 @@ function Nav() {
         <li>
           <MyLink ICON={HiEmojiHappy} mypage={'Board'} to={'board'} />
         </li>
+        <li>
+          <MyLink ICON={HiEmojiHappy} mypage={'ChatingRoom'} to={'rooms'} />
+        </li>
         {/* <li>
           <MyLink ICON={HiEmojiHappy} mypage={'집합관리'} to={'group'} />
         </li>

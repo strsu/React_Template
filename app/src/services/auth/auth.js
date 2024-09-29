@@ -1,3 +1,5 @@
+import { Cookies } from 'react-cookie';
+
 import { API } from '../constants';
 import { customAxios } from '../api';
 
@@ -14,12 +16,18 @@ export const authApi = {
         const access = res.data.access;
         const refresh = res.data.refresh;
 
+        useAuthStore.getState().setAccess(access);
         useAuthStore.getState().setVerify(true);
 
         localStorage.setItem('refresh', refresh); // localStorage에 토큰 저장
         customAxios.defaults.headers.common[
           'Authorization'
         ] = `Bearer ${access}`;
+
+        const cookies = new Cookies();
+        cookies.set('X-Authorization', access, {
+          domain: 'localhost',
+        });
 
         return true;
       })
@@ -61,7 +69,14 @@ export const authApi = {
         customAxios.defaults.headers.common[
           'Authorization'
         ] = `Bearer ${access}`;
+        useAuthStore.getState().setAccess(access);
         useAuthStore.getState().setVerify(true);
+
+        const cookies = new Cookies();
+        cookies.set('X-Authorization', access, {
+          domain: 'localhost',
+        });
+
         return true;
       })
       .catch((err) => {

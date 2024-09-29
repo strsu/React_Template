@@ -1,0 +1,36 @@
+.box {
+  display: flex;
+  padding: 10px 12px;
+  box-sizing: border-box;
+  /* 박스 모델을 변경하여 패딩을 포함한 너비 계산 */
+  width: 400px;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+}
+
+.box img {
+  width: 65px;
+  height: 65px;
+  border-radius: 100rem;
+  margin-right: 15px;
+}
+
+.box_info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  gap: 4px;
+}
+
+.box_user {
+  display: flex;
+  gap: 10px;
+  height: 20px;
+}
+
+.box_message {
+  height: 20px;
+}

@@ -1,12 +1,11 @@
 import { useChatStore } from '../context/chatStore';
-import { API } from './constants';
 
 const socketHost = `wss://${process.env.REACT_APP_API}`;
 
 export default class WebSocketManager {
-  constructor(userName) {
-    this.userName = userName;
-    this.socket = new WebSocket(`${socketHost}${API.SOCKET.CHAT}/${userName}/`);
+  constructor(path) {
+    this.path = `${socketHost}${path}`;
+    this.socket = new WebSocket(this.path);
     this.socket.onopen = this.onopen.bind(this);
     this.socket.onerror = this.onopen.bind(this);
     this.socket.onmessage = this.onmessage.bind(this);
@@ -18,7 +17,7 @@ export default class WebSocketManager {
   }
 
   connect() {
-    this.socket = new WebSocket(`${API.SOCKET.CHAT}/${this.userName}/`);
+    this.socket = new WebSocket(this.path);
     this.socket.onopen = this.onopen.bind(this);
     this.socket.onerror = this.onopen.bind(this);
     this.socket.onmessage = this.onmessage.bind(this);
@@ -26,17 +25,19 @@ export default class WebSocketManager {
   }
 
   onopen(event) {
-    //console.log('WebSocket connection opened:', event);
-    //document.getElementById('chat-message-input').removeAttribute('readonly');
-    //document.getElementById("chat-message-input").focus();
-    //document.addEventListener('mousemove', getMousePosition);
+    console.log('WebSocket connection opened:', event);
+    // document.getElementById('chat-message-input').removeAttribute('readonly');
+    // document.getElementById('chat-message-input').focus();
+    // document.addEventListener('mousemove', getMousePosition);
   }
 
   onmessage(event) {
     const data = JSON.parse(event.data);
 
-    if (Object.keys(data).includes('msg')) {
-      useChatStore.getState().onMessage(data);
+    if (Object.keys(data).includes('type')) {
+      if (data.type == 'message') {
+        useChatStore.getState().onMessage(data.data);
+      }
     }
     console.log(data);
     // this.receiver.actor(data);

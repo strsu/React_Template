@@ -9,8 +9,12 @@ export const API = {
     REFRESH: `/${API_PREFIX}/user/token/refresh/`,
   },
   BOARD: `/${API_PREFIX}/board/`,
+  GOODS: {
+    ROOMS: `/${API_PREFIX}/goods/rooms/`,
+  },
   MEDIA: `/${MEDIA_PREFIX}/`,
   SOCKET: {
-    CHAT: `/${WS_PREFIX}/chat/test`,
+    CHAT: `/${WS_PREFIX}/chat`,
+    GOODS: `/${WS_PREFIX}/goods/`,
   },
 };
