@@ -46,6 +46,7 @@ function RoomsList() {
   useEffect(() => {
     const fetchData = async () => {
       if (room) {
+        setConversation([]);
         roomsApi
           .conversation(room.id)
           .then((res) => {
