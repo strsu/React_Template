@@ -11,8 +11,14 @@ export const useMsgStore = create((set, get) => ({
     }
   },
   popMessage: () => {
-    set((state) => ({
-      msgList: state.msgList.slice(1),
-    }));
+    if (get().msgList.length) {
+      let msgList = get().msgList;
+      let lastMsg = msgList.shift();
+      set(() => ({
+        msgList: msgList,
+      }));
+      return lastMsg;
+    }
+    return null;
   },
 }));

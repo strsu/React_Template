@@ -4,6 +4,7 @@ import { API } from '../constants';
 import { customAxios } from '../api';
 
 import { useAuthStore } from '../../context/authStore';
+import { useMsgStore } from '../../context/msgStore';
 
 export const authApi = {
   login: (user) => {
@@ -32,13 +33,19 @@ export const authApi = {
         return true;
       })
       .catch((err) => {
-        console.log(err);
         if (err.code === 'ERR_NETWORK') {
           return false;
         }
-        if (err.response.status >= 500) {
-          return false;
-        } else if (err.response.status >= 400) {
+        if (err.response.status >= 400) {
+          for (let errMsg of err.response.data.errors) {
+            if (errMsg.hasOwnProperty('attr')) {
+              useMsgStore
+                .getState()
+                .addMessage(`${errMsg.attr}, ${errMsg.message}`);
+            } else {
+              useMsgStore.getState().addMessage(errMsg.message);
+            }
+          }
           return false;
         }
       });

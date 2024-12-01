@@ -1,5 +1,5 @@
 // MessageList.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { useMsgStore } from '../../context/msgStore';
 
@@ -26,21 +26,42 @@ const Message = styled.div`
 `;
 
 function MessageList() {
-  const msgList = useMsgStore((state) => state.msgList);
+  const [msgs, setMsgs] = useState({});
+  const msgShowTime = 5;
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      if (msgList.length > 0) {
-        useMsgStore.getState().popMessage();
-      }
-    }, 2000);
+    if (Object.keys(msgs).length) {
+      const timer = setInterval(() => {
+        let remainMsgs = {};
+        let msgFinishAt = new Date();
+        msgFinishAt.setSeconds(msgFinishAt.getSeconds() - msgShowTime); // 초 더하기
+        for (let msg in msgs) {
+          let msgReceiveAt = msgs[msg];
 
-    return () => clearInterval(timer);
-  }, [msgList]);
+          if (msgReceiveAt > msgFinishAt) {
+            remainMsgs[msg] = msgs[msg];
+          }
+        }
+        setMsgs(remainMsgs);
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [msgs]);
+
+  useMsgStore.subscribe((state) => {
+    let msg = state.popMessage();
+    if (msg) {
+      setMsgs((prevMsgs) => ({
+        ...prevMsgs,
+        [msg]: new Date(),
+      }));
+    }
+  });
 
   return (
     <MessageBox>
-      {msgList.map((message, index) => (
+      {Object.keys(msgs).map((message, index) => (
         <Message key={index} className="message">
           {message}
         </Message>
