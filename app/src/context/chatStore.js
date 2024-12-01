@@ -15,14 +15,24 @@ export const useChatStore = create((set, get) => ({
     }
   },
 
-  onMessage: (msg) => {
-    if (msg) {
-      console.log(msg);
-      const room_id = msg.room;
+  onMessage: (data) => {
+    if (data) {
+      const room_id = data.room;
       set((state) => ({
         conversation: {
           ...state.conversation,
-          [room_id]: [...(state.conversation[room_id] || []), msg], // room_id에 해당하는 배열에 msg 추가
+          [room_id]: [...(state.conversation[room_id] || []), data.msg], // room_id에 해당하는 배열에 msg 추가
+        },
+      }));
+    }
+  },
+
+  setConversation: (room_id, conversation) => {
+    if (room_id) {
+      set((state) => ({
+        conversation: {
+          ...state.conversation,
+          [room_id]: conversation,
         },
       }));
     }

@@ -33,6 +33,9 @@ export const authApi = {
       })
       .catch((err) => {
         console.log(err);
+        if (err.code === 'ERR_NETWORK') {
+          return false;
+        }
         if (err.response.status >= 500) {
           return false;
         } else if (err.response.status >= 400) {

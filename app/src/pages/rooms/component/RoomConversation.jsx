@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from './roomconversation.module.css';
 
 import { useChatStore } from '../../../context/chatStore';
@@ -30,8 +30,32 @@ const msgManager = {
   },
 };
 
-export const RoomConversation = ({ room, data }) => {
+export const RoomConversation = ({ room }) => {
   const [text, setText] = useState('');
+  const [conversation, setConversation] = useState([]);
+
+  // const messageEndRef = useRef<HTMLDivElement>(null); // prettier-ignore
+  const messageEndRef = useRef(null); // prettier-ignore
+
+  useChatStore.subscribe(
+    /*
+      state.conversation 은 call by reference 라서 react에서 감지를 못 함
+      때문에 map으로 새로운 객체를 만들어줘야 re-render가 발생한다.
+    */
+    (state) => {
+      if (room) {
+        setConversation(state.conversation[room.id].map((v) => v));
+      }
+    },
+    (state) => state.conversation
+  );
+
+  useEffect(() => {
+    // 현재 스크롤 위치 === messageEndRef.current.scrollTop
+    // 스크롤 길이 === messageEndRef.current.scrollHeight
+    messageEndRef.current.scrollTop = messageEndRef.current.scrollHeight;
+    messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
+  }, [conversation]);
 
   // 엔터 키가 눌리면 실행될 함수
   const handleEnterPress = (e) => {
@@ -60,19 +84,17 @@ export const RoomConversation = ({ room, data }) => {
     }
   };
 
-  if (data.length == 0) {
-    return <div className={styles.container}></div>;
-  }
   return (
     <div className={styles.container}>
-      <div className={styles.conversation}>
-        {data.map((msg, idx) => {
-          if (msg.is_my) {
-            return msgManager.my(room, msg);
-          } else {
-            return msgManager.you(room, msg);
-          }
-        })}
+      <div className={styles.conversation} ref={messageEndRef}>
+        {room &&
+          conversation.map((msg, idx) => {
+            if (msg.is_my) {
+              return msgManager.my(room, msg);
+            } else {
+              return msgManager.you(room, msg);
+            }
+          })}
       </div>
       <div>
         <div className={styles.inputArea}>
